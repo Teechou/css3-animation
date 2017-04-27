@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body,ul,li,h1{margin:0;padding: 0;}
+		li{list-style: none;}
+		.container{width: 100%;overflow: hidden;}
+		.box{width:1000px;margin: 0 auto;position: relative;height:1200px;}
+		.air{position: absolute;left: 50%;margin-left:-120px;top:80px;transition: all 1s ease-in-out;}
+		.hand{position: absolute;right:-740px;top:0;transition: all 1s linear;}
+		.phonebg{position: absolute;left: 50%;margin-left:-720px;bottom: 0px;width:1440px;height:720px;}
+		/*.box:hover .air{transform:translateY(480px);}
+		.box:hover .hand{transform: translateX(100px);}*/
+		.move .air{transform:translateY(520px) scale(0.5);}
+		.move .hand{transform: translateX(100px) scale(0.8);}
+		header{height:200px;background:pink;}
+		footer{height:100px;background:#eee;}
+		/*#FFE1E0粉色*/
+		#banner{width:100%;height:656px;background: #333;position: relative;overflow: hidden;}
+		#banner ul li{position: absolute;width: 1200px;top: 0;left: 50%;margin-left:-600px;display: none;height:656px;}
+		#banner ul li img{position: absolute;top: 30px;right:-220px;transform: translateX(-100px);animation:moves 1s;
+						/*transition:all .5s linear;opacity: 0.2;*/}
+		#indicator{position: absolute;left: 100px;bottom: 20px;}
+		#indicator span{width: 30px;height: 30px;border-radius:50%;float: left;margin: 0 10px; cursor: pointer;}
+		#indicator span:nth-child(1){background: #000;border:3px solid #fff;}
+		#indicator span:nth-child(2){background:pink;border:3px solid #fff;}
+		#indicator span:nth-child(3){background: #ccc;border:3px solid #fff;}
+		#indicator span:nth-child(4){background: #FCE3C8;border:3px solid #fff;}
+		#indicator span.on{border:3px solid #f3922b;}
+		.w1200{width: 1200px;margin: 0 auto;position: relative;height:656px;}
+		/*#banner ul li:hover img{transform: translateX(-200px);opacity: 1 }*/
+		/*#banner ul li img.active{transform: translateX(-200px);opacity: 1;filter:alpha(opacity=1);}*/
+		@keyframes moves
+		{
+			0%   {transform: translateX(0);opacity: 0;}
+			30%  {transform: translateX(50px);opacity: 0.5;}
+			100% {transform: translateX(-100px);opacity: 1;}
+			/*100%   {transform: translateX(0);opacity: 1;}*/
+		}
+	</style>
+</head>
+<body>
+<header><h1>hello</h1></header>
+<section id="banner">
+	<div class="w1200">
+		<ul>
+			<li style="display: block;"><div><img src="img/black.png" class="active"></div></li>
+			<li><div><img src="img/pink.png"></div></li>
+			<li><div><img src="img/white.png"></div></li>
+			<li><div><img src="img/yellow.png"></div></li>
+		</ul>
+		<div id="indicator">
+			<span class="on"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+</section>
+<div class="container">
+	<div class="box">
+		<div class="air"><img src="img/air.png"></div>	
+		<div class="hand"><img src="img/hand.png"></div>
+		<div class="phonebg"><img src="img/phonebg.png"></div>
+	</div>
+</div>
+<footer></footer>
+<script type="text/javascript" src="js/banner.js"></script>
+<script type="text/javascript">
+	function getElementsByClass(searchClass,node,tag) {
+		var classElements = new Array();
+		if ( node == null )
+			node = document;
+		if ( tag == null )
+			tag = '*';
+		var els = node.getElementsByTagName(tag);
+		var elsLen = els.length;
+		var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+		for (i = 0, j = 0; i < elsLen; i++) {
+			if ( pattern.test(els[i].className) ) {
+				classElements[j] = els[i];
+				j++;
+			}
+		}
+		return classElements;
+	}
+	var oContainer=getElementsByClass("container")[0];
+	var oAir=getElementsByClass("air")[0];
+	var oHand=getElementsByClass("hand")[0];
+	var oldClass=oContainer.className;
+	var conOffset=oContainer.offsetTop;
+	console.log(conOffset);
+	window.addEventListener('scroll', function(){
+		var toTop=document.documentElement.scrollTop||document.body.scrollTop;
+		console.log(toTop);
+		if(toTop>=150+conOffset)
+		{
+			oContainer.className=oldClass+" move";
+		}else{
+			oContainer.className=oldClass;
+		}
+	}, false)
+
+    var banner=new Banner("banner","indicator","","");
+</script>
+</body>
+</html>
